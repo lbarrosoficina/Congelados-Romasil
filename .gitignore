@@ -1,1 +1,4 @@
 site-upload.tar.gz
+
+# Local Netlify folder
+.netlify
