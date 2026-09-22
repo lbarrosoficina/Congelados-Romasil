@@ -23,6 +23,7 @@ const primaryNav = document.querySelector('#primaryNav');
 const checkoutForm = document.querySelector('#checkoutForm');
 const formStatus = document.querySelector('#formStatus');
 const WHATSAPP_NUMBER = '56962319733';
+const ORDER_FORM_ENDPOINT = 'https://formsubmit.co/ajax/lbarros.oficina@gmail.com';
 
 function persistCart() {
   try {
@@ -170,18 +171,35 @@ checkoutForm.addEventListener('submit', async event => {
   const addressLine2 = String(data.get('addressLine2') || '').trim();
   const addressDetails = addressLine2 ? `\nDepartamento/casa: ${addressLine2}` : '';
   const summary = `Hola, quiero solicitar este pedido en Congelados Romasil.\n\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nCorreo electrónico: ${data.get('email')}\nDirección: ${data.get('addressLine1')}${addressDetails}\nComuna: ${data.get('commune')}\n\nProductos:\n${items}\n\nSubtotal referencial: ${money.format(total)}\n\nQuedo atento a la confirmación de stock, total y despacho.`;
-  data.set('orderSummary', summary);
   submitButton.disabled = true;
   submitButton.textContent = 'Enviando…';
   formStatus.textContent = 'Registrando tu solicitud de forma segura…';
 
   try {
-    const response = await fetch('/', {
+    const response = await fetch(ORDER_FORM_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data).toString()
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        _subject: 'Nueva solicitud de pedido — Congelados Romasil',
+        _template: 'table',
+        _captcha: 'false',
+        _honey: data.get('_honey') || '',
+        nombre: data.get('name'),
+        telefono: data.get('phone'),
+        email: data.get('email'),
+        direccion: data.get('addressLine1'),
+        complementoDireccion: addressLine2,
+        comuna: data.get('commune'),
+        pedido: summary
+      })
     });
-    if (!response.ok) throw new Error(`Netlify Forms respondió con estado ${response.status}`);
+    const result = await response.json().catch(() => null);
+    if (!response.ok || result?.success === false) {
+      throw new Error(result?.message || `El servicio de formularios respondió con estado ${response.status}`);
+    }
 
     cart.clear();
     persistCart();
@@ -190,7 +208,7 @@ checkoutForm.addEventListener('submit', async event => {
     window.location.assign(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}`);
   } catch (error) {
     console.error('No fue posible registrar la solicitud', error);
-    formStatus.textContent = 'No pudimos registrar la solicitud. Revisa tu conexión e inténtalo nuevamente.';
+    formStatus.textContent = 'No pudimos registrar la solicitud por correo. Inténtalo nuevamente en unos minutos.';
     submitButton.disabled = false;
     submitButton.textContent = 'Enviar solicitud';
   }

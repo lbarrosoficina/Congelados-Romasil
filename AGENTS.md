@@ -12,7 +12,7 @@
 
 ## Activación del formulario de pedidos
 
-- El formulario `pedido-romasil` utiliza Netlify Forms y abre WhatsApp al número `+56 9 6231 9733` después de registrar correctamente la solicitud.
-- Al publicar por primera vez este formulario, habilitar Netlify Forms para el proyecto `congelados-romasil`.
-- Configurar en Netlify una notificación de nuevas presentaciones del formulario `pedido-romasil` al correo `lbarros.oficina@gmail.com`.
-- Antes de considerar terminado el despliegue, enviar una solicitud de prueba y comprobar tanto la recepción del correo como la apertura de WhatsApp con el resumen completo.
+- El formulario `pedido-romasil` utiliza el endpoint AJAX de FormSubmit para reenviar cada solicitud a `lbarros.oficina@gmail.com` y luego abre WhatsApp al número `+56 9 6231 9733`.
+- El formulario debe funcionar desde ambos alojamientos, Netlify y Vercel, sin depender de los servicios de formularios de ninguno de ellos.
+- Al publicar por primera vez esta integración, enviar una solicitud de prueba y activar FormSubmit mediante el correo de confirmación que llegará a `lbarros.oficina@gmail.com`.
+- Antes de considerar terminado el despliegue, comprobar desde Vercel y Netlify tanto la recepción del correo como la apertura de WhatsApp con el resumen completo.

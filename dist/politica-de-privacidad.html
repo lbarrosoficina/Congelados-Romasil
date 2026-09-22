@@ -88,8 +88,8 @@
       <div class="policy-heading"><span>03</span><div><p class="eyebrow dark">Cómo funciona hoy</p><h2>Cómo se registra y envía tu solicitud</h2></div></div>
       <ul class="plain-list">
         <li>El carrito se guarda temporalmente en el almacenamiento de sesión de tu navegador para mantener productos y cantidades al navegar entre las páginas del sitio. Se elimina cuando finaliza esa sesión del navegador.</li>
-        <li>Al pulsar “Enviar solicitud”, los datos del formulario y el resumen del pedido se registran mediante Netlify Forms para que Congelados Romasil pueda recibir y gestionar la solicitud.</li>
-        <li>Netlify puede conservar la presentación y generar una notificación al correo comercial de Congelados Romasil.</li>
+        <li>Al pulsar “Enviar solicitud”, los datos del formulario y el resumen del pedido se transmiten mediante FormSubmit para que Congelados Romasil los reciba en su correo comercial y pueda gestionar la solicitud.</li>
+        <li>FormSubmit puede procesar y conservar temporalmente la presentación para entregarla por correo, prevenir abusos y mantener la seguridad del servicio.</li>
         <li>Después del registro se abre una conversación de WhatsApp dirigida al número comercial, con el resumen preparado. El mensaje solo se envía por WhatsApp cuando tú lo confirmas dentro de esa aplicación.</li>
         <li>WhatsApp y el proveedor del correo electrónico aplican sus propias condiciones y políticas de privacidad al procesar la comunicación.</li>
       </ul>
@@ -110,7 +110,8 @@
     <section class="policy-section" id="proveedores">
       <div class="policy-heading"><span>05</span><div><p class="eyebrow dark">Servicios tecnológicos</p><h2>Quiénes pueden procesar datos técnicos</h2></div></div>
       <div class="policy-grid">
-        <article><h3>Netlify</h3><p>Aloja y distribuye la web, registra las solicitudes enviadas mediante Netlify Forms y puede generar notificaciones por correo. También procesa registros técnicos necesarios para disponibilidad, prevención de abuso y seguridad.</p></article>
+        <article><h3>Netlify y Vercel</h3><p>Alojan y distribuyen la web. Pueden procesar registros técnicos necesarios para disponibilidad, prevención de abuso y seguridad, pero el formulario de pedidos no depende de sus servicios de formularios.</p></article>
+        <article><h3>FormSubmit</h3><p>Recibe los datos enviados en el formulario y los reenvía al correo comercial de Congelados Romasil. También puede procesar registros técnicos y conservar temporalmente las presentaciones para operar y proteger el servicio.</p></article>
         <article><h3>Google Fonts</h3><p>Entrega las tipografías utilizadas por la web. Al cargar estos recursos, Google puede recibir información técnica como la dirección IP y datos del navegador.</p></article>
         <article><h3>Correo y WhatsApp</h3><p>La notificación del pedido puede llegar al correo comercial de Congelados Romasil y el resumen se prepara para continuar la comunicación mediante WhatsApp. Cada proveedor trata la información conforme a sus propias condiciones.</p></article>
       </div>
@@ -119,7 +120,7 @@
 
     <section class="policy-section" id="conservacion">
       <div class="policy-heading"><span>06</span><div><p class="eyebrow dark">Solo el tiempo necesario</p><h2>Conservación y eliminación</h2></div></div>
-      <p>El contenido del carrito permanece temporalmente en el almacenamiento de sesión del navegador y se elimina al finalizar esa sesión. Las solicitudes enviadas pueden conservarse en Netlify Forms, en el correo comercial y en WhatsApp durante el tiempo necesario para atenderlas, gestionar la relación comercial y cumplir las obligaciones legales aplicables.</p>
+      <p>El contenido del carrito permanece temporalmente en el almacenamiento de sesión del navegador y se elimina al finalizar esa sesión. Las solicitudes enviadas pueden conservarse temporalmente en FormSubmit y permanecer en el correo comercial y en WhatsApp durante el tiempo necesario para atenderlas, gestionar la relación comercial y cumplir las obligaciones legales aplicables.</p>
       <dl class="data-grid compact">
         <div><dt>Consultas no convertidas en compra</dt><dd class="placeholder">—</dd></div>
         <div><dt>Pedidos y documentos comerciales</dt><dd class="placeholder">—</dd></div>
@@ -189,11 +190,8 @@
   </aside>
 
   <dialog id="checkoutDialog" aria-labelledby="checkoutTitle">
-    <form id="checkoutForm" name="pedido-romasil" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="pedido-romasil">
-      <input type="hidden" name="subject" value="Nueva solicitud de pedido — Congelados Romasil">
-      <input type="hidden" name="orderSummary" value="">
-      <p class="honeypot" aria-hidden="true"><label>No completar este campo<input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <form id="checkoutForm" name="pedido-romasil" method="POST">
+      <p class="honeypot" aria-hidden="true"><label>No completar este campo<input name="_honey" tabindex="-1" autocomplete="off"></label></p>
       <button class="icon-button dialog-close" type="button" id="closeDialog" aria-label="Cerrar">×</button>
       <p class="eyebrow dark">Último paso</p><h2 id="checkoutTitle">Datos para confirmar</h2><p class="dialog-copy">Registraremos tu solicitud y abriremos WhatsApp para que confirmes el envío.</p>
       <label>Nombre<input name="name" autocomplete="name" required placeholder="Tu nombre"></label>

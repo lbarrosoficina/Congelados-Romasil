@@ -281,11 +281,8 @@
   </aside>
 
   <dialog id="checkoutDialog" aria-labelledby="checkoutTitle">
-    <form id="checkoutForm" name="pedido-romasil" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="pedido-romasil">
-      <input type="hidden" name="subject" value="Nueva solicitud de pedido — Congelados Romasil">
-      <input type="hidden" name="orderSummary" value="">
-      <p class="honeypot" aria-hidden="true"><label>No completar este campo<input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <form id="checkoutForm" name="pedido-romasil" method="POST">
+      <p class="honeypot" aria-hidden="true"><label>No completar este campo<input name="_honey" tabindex="-1" autocomplete="off"></label></p>
       <button class="icon-button dialog-close" type="button" id="closeDialog" aria-label="Cerrar">×</button>
       <p class="eyebrow dark">Último paso</p><h2 id="checkoutTitle">Datos para confirmar</h2><p class="dialog-copy">Registraremos tu solicitud y abriremos WhatsApp para que confirmes el envío.</p>
       <label>Nombre<input name="name" autocomplete="name" required placeholder="Tu nombre"></label>
