@@ -113,7 +113,9 @@ document.querySelector('#checkoutForm').addEventListener('submit', event => {
   const data = new FormData(event.currentTarget);
   const items = [...cart.values()].map(item => `${item.quantity} × ${item.name}`).join('\n');
   const total = [...cart.values()].reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const summary = `Solicitud de pedido\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nComuna: ${data.get('commune')}\n\n${items}\n\nSubtotal referencial: ${money.format(total)}`;
+  const addressLine2 = String(data.get('addressLine2') || '').trim();
+  const addressDetails = addressLine2 ? `\nDepartamento/casa: ${addressLine2}` : '';
+  const summary = `Solicitud de pedido\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nCorreo electrónico: ${data.get('email')}\nDirección: ${data.get('addressLine1')}${addressDetails}\nComuna: ${data.get('commune')}\n\n${items}\n\nSubtotal referencial: ${money.format(total)}`;
   navigator.clipboard?.writeText(summary);
   checkoutDialog.close();
   showToast('Resumen copiado. Ya puedes enviarlo al vendedor.');

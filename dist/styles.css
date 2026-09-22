@@ -746,6 +746,8 @@ footer {
 }
 dialog {
   width: min(520px, calc(100% - 28px));
+  max-height: calc(100vh - 28px);
+  overflow-y: auto;
   border: 0;
   border-radius: 14px;
   padding: 0;
@@ -779,7 +781,8 @@ label {
   font-size: 0.86rem;
   margin: 16px 0;
 }
-input {
+input,
+select {
   display: block;
   width: 100%;
   margin-top: 7px;
@@ -789,9 +792,31 @@ input {
   background: #fbfefe;
   color: var(--ink);
 }
-input:focus {
+select {
+  cursor: pointer;
+}
+input:focus,
+select:focus {
   outline: 3px solid rgba(117, 215, 223, 0.35);
   border-color: #16818b;
+}
+.address-fields {
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+.address-fields legend {
+  padding: 0;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+.address-fields label {
+  margin: 10px 0 0;
+}
+.address-fields label span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 .consent {
   display: flex;
