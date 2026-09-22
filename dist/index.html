@@ -59,8 +59,46 @@
             "name": "Productos destacados",
             "numberOfItems": 2,
             "itemListElement": [
-              { "@type": "ListItem", "position": 1, "name": "Plateada de vacuno", "url": "https://congelados-romasil.netlify.app/productos.html#plateada" },
-              { "@type": "ListItem", "position": 2, "name": "Porciones de salmón", "url": "https://congelados-romasil.netlify.app/productos.html#salmon" }
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "url": "https://congelados-romasil.netlify.app/productos.html#plateada",
+                "item": {
+                  "@type": "Product",
+                  "@id": "https://congelados-romasil.netlify.app/productos.html#product-plateada",
+                  "name": "Plateada de vacuno",
+                  "image": "https://congelados-romasil.netlify.app/assets/product-plateada-v1.webp",
+                  "description": "Plateada de vacuno de 1 kg, envasada al vacío, ideal para horno, olla o cocción lenta.",
+                  "offers": {
+                    "@type": "Offer",
+                    "url": "https://congelados-romasil.netlify.app/productos.html#plateada",
+                    "price": 8990,
+                    "priceCurrency": "CLP",
+                    "availability": "https://schema.org/LimitedAvailability",
+                    "seller": { "@id": "https://congelados-romasil.netlify.app/#organization" }
+                  }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "url": "https://congelados-romasil.netlify.app/productos.html#salmon",
+                "item": {
+                  "@type": "Product",
+                  "@id": "https://congelados-romasil.netlify.app/productos.html#product-salmon",
+                  "name": "Porciones de salmón",
+                  "image": "https://congelados-romasil.netlify.app/assets/product-salmon-v1.webp",
+                  "description": "Porciones individuales de salmón sin piel en formato de 800 g, listas para sartén, horno o air fryer.",
+                  "offers": {
+                    "@type": "Offer",
+                    "url": "https://congelados-romasil.netlify.app/productos.html#salmon",
+                    "price": 10990,
+                    "priceCurrency": "CLP",
+                    "availability": "https://schema.org/LimitedAvailability",
+                    "seller": { "@id": "https://congelados-romasil.netlify.app/#organization" }
+                  }
+                }
+              }
             ]
           }
         }
@@ -74,14 +112,15 @@
       <span class="brand-mark" aria-hidden="true">❄</span>
       <span>Congelados <strong>Romasil</strong></span>
     </a>
-    <nav aria-label="Navegación principal">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav"><span aria-hidden="true">☰</span><span>Menú</span></button>
+    <nav id="primaryNav" aria-label="Navegación principal">
       <a href="index.html">Inicio</a>
       <a href="productos.html">Productos</a>
       <a href="index.html#como-comprar">Cómo comprar</a>
       <a href="confianza-y-cumplimiento.html">Confianza</a>
       <a href="politica-de-privacidad.html">Privacidad</a>
     </nav>
-    <button class="cart-button" id="openCart" type="button" aria-label="Abrir carrito, 0 productos">
+    <button class="cart-button" id="openCart" type="button" aria-label="Abrir carrito, 0 productos" aria-controls="cartDrawer" aria-expanded="false">
       <span>Tu pedido</span>
       <span class="cart-count" id="cartCount">0</span>
     </button>
@@ -124,12 +163,12 @@
 
       <div class="product-grid featured-products" id="productGrid">
         <article class="product-card" id="plateada" data-category="vacuno" data-id="plateada" data-name="Plateada de vacuno" data-price="8990">
-          <div class="product-art beef"><span>🥩</span><small>Vacuno</small></div>
-          <div class="product-info"><p class="product-kicker">Corte versátil · 1 kg</p><h3>Plateada de vacuno</h3><p>Ideal para horno, olla o cocción lenta. Envasada al vacío.</p><div class="product-footer"><strong>$8.990</strong><button class="add-button" type="button">Agregar</button></div></div>
+          <div class="product-art"><img src="assets/product-plateada-v1.webp" width="800" height="560" loading="lazy" decoding="async" alt="Plateada de vacuno congelada y envasada al vacío"><small>Vacuno</small></div>
+          <div class="product-info"><p class="product-kicker">Corte versátil · 1 kg</p><h3>Plateada de vacuno</h3><p>Ideal para horno, olla o cocción lenta. Envasada al vacío.</p><div class="product-footer"><strong>$8.990</strong><button class="add-button" type="button" aria-label="Agregar Plateada de vacuno al pedido">Agregar</button></div></div>
         </article>
         <article class="product-card" id="salmon" data-category="pescados" data-id="salmon" data-name="Porciones de salmón" data-price="10990">
-          <div class="product-art salmon"><span>🐟</span><small>Más pedido</small></div>
-          <div class="product-info"><p class="product-kicker">Sin piel · 800 g</p><h3>Porciones de salmón</h3><p>Porciones individuales, listas para sartén, horno o air fryer.</p><div class="product-footer"><strong>$10.990</strong><button class="add-button" type="button">Agregar</button></div></div>
+          <div class="product-art"><img src="assets/product-salmon-v1.webp" width="800" height="560" loading="lazy" decoding="async" alt="Porciones de salmón congeladas sin piel"><small>Más pedido</small></div>
+          <div class="product-info"><p class="product-kicker">Sin piel · 800 g</p><h3>Porciones de salmón</h3><p>Porciones individuales, listas para sartén, horno o air fryer.</p><div class="product-footer"><strong>$10.990</strong><button class="add-button" type="button" aria-label="Agregar Porciones de salmón al pedido">Agregar</button></div></div>
         </article>
       </div>
       <div class="featured-actions"><a class="button primary dark" href="productos.html">Ver todos los productos</a></div>
@@ -178,16 +217,20 @@
   </footer>
 
   <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
-  <aside class="cart-drawer" id="cartDrawer" aria-labelledby="cartTitle" aria-hidden="true">
+  <aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true" inert>
     <div class="drawer-header"><div><p class="eyebrow dark">Resumen</p><h2 id="cartTitle">Tu pedido</h2></div><button class="icon-button" id="closeCart" type="button" aria-label="Cerrar carrito">×</button></div>
     <div class="cart-items" id="cartItems"><div class="empty-cart"><span>❄</span><h3>Tu pedido está vacío</h3><p>Agrega productos del catálogo para comenzar.</p></div></div>
     <div class="cart-summary" id="cartSummary" hidden><div><span>Subtotal referencial</span><strong id="cartTotal">$0</strong></div><p>El despacho se cotiza según comuna.</p><button class="button primary full" id="checkoutButton" type="button">Solicitar pedido</button></div>
   </aside>
 
   <dialog id="checkoutDialog" aria-labelledby="checkoutTitle">
-    <form id="checkoutForm">
+    <form id="checkoutForm" name="pedido-romasil" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="pedido-romasil">
+      <input type="hidden" name="subject" value="Nueva solicitud de pedido — Congelados Romasil">
+      <input type="hidden" name="orderSummary" value="">
+      <p class="honeypot" aria-hidden="true"><label>No completar este campo<input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <button class="icon-button dialog-close" type="button" id="closeDialog" aria-label="Cerrar">×</button>
-      <p class="eyebrow dark">Último paso</p><h2 id="checkoutTitle">Datos para confirmar</h2><p class="dialog-copy">Prepararemos el resumen para coordinar disponibilidad y despacho.</p>
+      <p class="eyebrow dark">Último paso</p><h2 id="checkoutTitle">Datos para confirmar</h2><p class="dialog-copy">Registraremos tu solicitud y abriremos WhatsApp para que confirmes el envío.</p>
       <label>Nombre<input name="name" autocomplete="name" required placeholder="Tu nombre"></label>
       <label>Teléfono<input name="phone" autocomplete="tel" inputmode="tel" required placeholder="+56 9 1234 5678"></label>
       <label>Correo electrónico<input type="email" name="email" autocomplete="email" required placeholder="tu@correo.cl"></label>
@@ -197,8 +240,9 @@
         <label>Departamento o casa <span>(opcional)</span><input name="addressLine2" autocomplete="address-line2" placeholder="Ej. Depto. 502 o Casa 18"></label>
       </fieldset>
       <label>Comuna<select name="commune" autocomplete="address-level2" required><option value="" selected disabled>Selecciona una comuna</option><option>Providencia</option><option>Ñuñoa</option><option>Las Condes</option></select></label>
-      <label class="consent"><input type="checkbox" required> <span>He leído la <a href="politica-de-privacidad.html" target="_blank" rel="noopener">política de privacidad</a> y autorizo el uso de mis datos para preparar esta solicitud.</span></label>
-      <button class="button primary full" type="submit">Preparar solicitud</button>
+      <label class="consent"><input type="checkbox" name="privacyConsent" value="Aceptado" required> <span>He leído la <a href="politica-de-privacidad.html" target="_blank" rel="noopener">política de privacidad</a> y autorizo el uso de mis datos para registrar la solicitud, notificarla por correo y continuar el envío mediante WhatsApp.</span></label>
+      <button class="button primary full" type="submit">Enviar solicitud</button>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       <p class="form-note">No se realizará ningún cobro ni se confirmará una compra en esta etapa.</p>
     </form>
   </dialog>

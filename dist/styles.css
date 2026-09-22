@@ -5,7 +5,7 @@
   --blue: #75d7df;
   --paper: #f7fbfb;
   --white: #fff;
-  --red: #e94f44;
+  --red: #c64138;
   --salmon: #ff9d78;
   --muted: #61717a;
   --line: #d8e4e6;
@@ -36,6 +36,11 @@ a {
 }
 a {
   color: inherit;
+}
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
 }
 .topbar {
   height: 78px;
@@ -83,6 +88,16 @@ a {
 }
 .topbar nav a:hover {
   color: #fff;
+}
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
 }
 .cart-button,
 .add-button,
@@ -179,8 +194,13 @@ a {
   box-shadow: 0 10px 30px rgba(233, 79, 68, 0.24);
 }
 .button.primary:hover {
-  background: #d94137;
+  background: #b93129;
   transform: translateY(-1px);
+}
+.button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none;
 }
 .button.dark {
   background: var(--ink);
@@ -381,25 +401,23 @@ a {
   position: relative;
   overflow: hidden;
 }
-.product-art:before,
-.product-art:after {
+.product-art:before {
   content: "";
   position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.product-art:before {
-  width: 230px;
-  height: 230px;
-}
-.product-art:after {
-  width: 150px;
-  height: 150px;
-}
-.product-art span {
-  font-size: 4.3rem;
-  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.2));
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 28, 38, 0.02) 50%, rgba(7, 28, 38, 0.24));
   z-index: 1;
+  pointer-events: none;
+}
+.product-art img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+.product-card:hover .product-art img {
+  transform: scale(1.035);
 }
 .product-art small {
   position: absolute;
@@ -411,24 +429,6 @@ a {
   padding: 6px 10px;
   font-weight: 700;
   z-index: 2;
-}
-.beef {
-  background: linear-gradient(135deg, #6e1721, #c74238);
-}
-.salmon {
-  background: linear-gradient(135deg, #a5362f, #ff9d78);
-}
-.chicken {
-  background: linear-gradient(135deg, #d0a56f, #f1d5a6);
-}
-.fish {
-  background: linear-gradient(135deg, #0a6777, #79ced0);
-}
-.burger {
-  background: linear-gradient(135deg, #55322c, #a8644f);
-}
-.shrimp {
-  background: linear-gradient(135deg, #b94e45, #ffb087);
 }
 .product-info {
   padding: 23px;
@@ -847,6 +847,25 @@ select:focus {
   color: var(--muted);
   font-size: 0.78rem;
 }
+.form-status {
+  min-height: 1.4em;
+  margin: 12px 0 0;
+  color: #8f302a;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+}
+.honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 .toast {
   position: fixed;
   left: 50%;
@@ -1080,6 +1099,7 @@ select:focus {
   .topbar {
     height: 68px;
     padding: 0 17px;
+    gap: 10px;
   }
   .brand {
     font-size: 0.92rem;
@@ -1090,6 +1110,32 @@ select:focus {
   }
   .cart-button > span:first-child {
     display: none;
+  }
+  .nav-toggle {
+    display: inline-flex;
+    margin-left: auto;
+    padding: 10px 8px;
+  }
+  .topbar nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    overflow: visible;
+    padding: 10px 17px 16px;
+    background: var(--ink);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 18px 35px rgba(3, 16, 22, 0.25);
+  }
+  .topbar nav.is-open {
+    display: flex;
+  }
+  .topbar nav a {
+    padding: 11px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
   .policy-section {
     scroll-margin-top: 90px;
@@ -1200,6 +1246,19 @@ select:focus {
   }
   .legal-hero h1 {
     font-size: 3.15rem;
+  }
+}
+@media (max-width: 360px) {
+  .nav-toggle > span:last-child {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {

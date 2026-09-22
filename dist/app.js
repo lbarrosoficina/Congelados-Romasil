@@ -16,6 +16,13 @@ const cartCount = document.querySelector('#cartCount');
 const cartTotal = document.querySelector('#cartTotal');
 const toast = document.querySelector('#toast');
 const checkoutDialog = document.querySelector('#checkoutDialog');
+const openCartButton = document.querySelector('#openCart');
+const closeCartButton = document.querySelector('#closeCart');
+const navToggle = document.querySelector('.nav-toggle');
+const primaryNav = document.querySelector('#primaryNav');
+const checkoutForm = document.querySelector('#checkoutForm');
+const formStatus = document.querySelector('#formStatus');
+const WHATSAPP_NUMBER = '56962319733';
 
 function persistCart() {
   try {
@@ -33,18 +40,47 @@ function showToast(message) {
 }
 
 function openCart() {
+  closeNavigation();
   drawer.classList.add('open');
+  drawer.inert = false;
   drawer.setAttribute('aria-hidden', 'false');
+  openCartButton.setAttribute('aria-expanded', 'true');
   backdrop.hidden = false;
   document.body.style.overflow = 'hidden';
-  document.querySelector('#closeCart').focus();
+  closeCartButton.focus();
 }
 
-function closeCart() {
+function closeCart({ restoreFocus = true } = {}) {
   drawer.classList.remove('open');
   drawer.setAttribute('aria-hidden', 'true');
+  openCartButton.setAttribute('aria-expanded', 'false');
+  drawer.inert = true;
   backdrop.hidden = true;
   document.body.style.overflow = '';
+  if (restoreFocus) openCartButton.focus();
+}
+
+function closeNavigation({ restoreFocus = false } = {}) {
+  if (!primaryNav || !navToggle) return;
+  primaryNav.classList.remove('is-open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  if (restoreFocus) navToggle.focus();
+}
+
+function trapDrawerFocus(event) {
+  if (event.key !== 'Tab' || !drawer.classList.contains('open')) return;
+  const focusable = [...drawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter(element => !element.disabled && element.getClientRects().length > 0);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 function renderCart() {
@@ -52,7 +88,7 @@ function renderCart() {
   const count = items.reduce((sum, item) => sum + item.quantity, 0);
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   cartCount.textContent = count;
-  document.querySelector('#openCart').setAttribute('aria-label', `Abrir carrito, ${count} productos`);
+  openCartButton.setAttribute('aria-label', `Abrir carrito, ${count} productos`);
   cartSummary.hidden = items.length === 0;
   cartTotal.textContent = money.format(total);
   if (!items.length) {
@@ -61,7 +97,7 @@ function renderCart() {
   }
   cartItems.innerHTML = items.map(item => `
     <div class="cart-line">
-      <div><h3>${item.name}</h3><p>${money.format(item.price)} c/u</p><div class="quantity"><button type="button" data-action="decrease" data-id="${item.id}" aria-label="Quitar una unidad">−</button><strong>${item.quantity}</strong><button type="button" data-action="increase" data-id="${item.id}" aria-label="Agregar una unidad">+</button></div><button class="remove" type="button" data-action="remove" data-id="${item.id}">Eliminar</button></div>
+      <div><h3>${item.name}</h3><p>${money.format(item.price)} c/u</p><div class="quantity"><button type="button" data-action="decrease" data-id="${item.id}" aria-label="Quitar una unidad de ${item.name}">−</button><strong>${item.quantity}</strong><button type="button" data-action="increase" data-id="${item.id}" aria-label="Agregar una unidad de ${item.name}">+</button></div><button class="remove" type="button" data-action="remove" data-id="${item.id}" aria-label="Eliminar ${item.name} del pedido">Eliminar</button></div>
       <strong>${money.format(item.price * item.quantity)}</strong>
     </div>`).join('');
 }
@@ -102,23 +138,62 @@ document.querySelectorAll('.filter').forEach(button => button.addEventListener('
   if (emptyState) emptyState.hidden = visibleProducts > 0;
 }));
 
-document.querySelector('#openCart').addEventListener('click', openCart);
-document.querySelector('#closeCart').addEventListener('click', closeCart);
+navToggle?.addEventListener('click', () => {
+  const willOpen = navToggle.getAttribute('aria-expanded') !== 'true';
+  navToggle.setAttribute('aria-expanded', String(willOpen));
+  primaryNav.classList.toggle('is-open', willOpen);
+});
+primaryNav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeNavigation()));
+openCartButton.addEventListener('click', openCart);
+closeCartButton.addEventListener('click', () => closeCart());
 backdrop.addEventListener('click', closeCart);
-document.addEventListener('keydown', event => { if (event.key === 'Escape' && drawer.classList.contains('open')) closeCart(); });
-document.querySelector('#checkoutButton').addEventListener('click', () => { closeCart(); checkoutDialog.showModal(); });
+document.addEventListener('keydown', event => {
+  trapDrawerFocus(event);
+  if (event.key !== 'Escape') return;
+  if (drawer.classList.contains('open')) closeCart();
+  else if (primaryNav?.classList.contains('is-open')) closeNavigation({ restoreFocus: true });
+});
+document.querySelector('#checkoutButton').addEventListener('click', () => { closeCart({ restoreFocus: false }); checkoutDialog.showModal(); });
 document.querySelector('#closeDialog').addEventListener('click', () => checkoutDialog.close());
-document.querySelector('#checkoutForm').addEventListener('submit', event => {
+checkoutDialog.addEventListener('close', () => openCartButton.focus());
+checkoutForm.addEventListener('submit', async event => {
   event.preventDefault();
-  const data = new FormData(event.currentTarget);
+  if (!cart.size) {
+    formStatus.textContent = 'Tu pedido está vacío. Agrega al menos un producto antes de enviarlo.';
+    return;
+  }
+
+  const submitButton = checkoutForm.querySelector('button[type="submit"]');
+  const data = new FormData(checkoutForm);
   const items = [...cart.values()].map(item => `${item.quantity} × ${item.name}`).join('\n');
   const total = [...cart.values()].reduce((sum, item) => sum + item.price * item.quantity, 0);
   const addressLine2 = String(data.get('addressLine2') || '').trim();
   const addressDetails = addressLine2 ? `\nDepartamento/casa: ${addressLine2}` : '';
-  const summary = `Solicitud de pedido\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nCorreo electrónico: ${data.get('email')}\nDirección: ${data.get('addressLine1')}${addressDetails}\nComuna: ${data.get('commune')}\n\n${items}\n\nSubtotal referencial: ${money.format(total)}`;
-  navigator.clipboard?.writeText(summary);
-  checkoutDialog.close();
-  showToast('Resumen copiado. Ya puedes enviarlo al vendedor.');
+  const summary = `Hola, quiero solicitar este pedido en Congelados Romasil.\n\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nCorreo electrónico: ${data.get('email')}\nDirección: ${data.get('addressLine1')}${addressDetails}\nComuna: ${data.get('commune')}\n\nProductos:\n${items}\n\nSubtotal referencial: ${money.format(total)}\n\nQuedo atento a la confirmación de stock, total y despacho.`;
+  data.set('orderSummary', summary);
+  submitButton.disabled = true;
+  submitButton.textContent = 'Enviando…';
+  formStatus.textContent = 'Registrando tu solicitud de forma segura…';
+
+  try {
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    });
+    if (!response.ok) throw new Error(`Netlify Forms respondió con estado ${response.status}`);
+
+    cart.clear();
+    persistCart();
+    renderCart();
+    checkoutDialog.close();
+    window.location.assign(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}`);
+  } catch (error) {
+    console.error('No fue posible registrar la solicitud', error);
+    formStatus.textContent = 'No pudimos registrar la solicitud. Revisa tu conexión e inténtalo nuevamente.';
+    submitButton.disabled = false;
+    submitButton.textContent = 'Enviar solicitud';
+  }
 });
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
