@@ -75,7 +75,13 @@ document.querySelectorAll('.filter').forEach(button => button.addEventListener('
   button.classList.add('active');
   button.setAttribute('aria-pressed', 'true');
   const filter = button.dataset.filter;
-  document.querySelectorAll('.product-card').forEach(card => { card.hidden = filter !== 'todos' && card.dataset.category !== filter; });
+  let visibleProducts = 0;
+  document.querySelectorAll('.product-card').forEach(card => {
+    card.hidden = filter !== 'todos' && card.dataset.category !== filter;
+    if (!card.hidden) visibleProducts += 1;
+  });
+  const emptyState = document.querySelector('#filterEmpty');
+  if (emptyState) emptyState.hidden = visibleProducts > 0;
 }));
 
 document.querySelector('#openCart').addEventListener('click', openCart);

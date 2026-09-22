@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Catálogo de carnes, pollo, pescados y mariscos congelados de Congelados Romasil con filtros por categoría.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#071c26">
+  <link rel="canonical" href="https://congelados-romasil.netlify.app/productos.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:title" content="Productos congelados | Congelados Romasil">
+  <meta property="og:description" content="Explora nuestro catálogo congelado y filtra por vacuno, cerdo, pollo, pescados o mariscos.">
+  <meta property="og:url" content="https://congelados-romasil.netlify.app/productos.html">
+  <meta property="og:image" content="https://congelados-romasil.netlify.app/assets/og-congelados-romasil-v1.jpg">
+  <title>Productos congelados | Congelados Romasil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Catálogo de productos congelados",
+      "numberOfItems": 6,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Plateada de vacuno", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#plateada" },
+        { "@type": "ListItem", "position": 2, "name": "Porciones de salmón", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#salmon" },
+        { "@type": "ListItem", "position": 3, "name": "Pechuga de pollo", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#pollo" },
+        { "@type": "ListItem", "position": 4, "name": "Filetes de merluza", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#merluza" },
+        { "@type": "ListItem", "position": 5, "name": "Hamburguesas premium", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#hamburguesas" },
+        { "@type": "ListItem", "position": 6, "name": "Camarón pelado", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#camaron" }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Congelados Romasil, inicio">
+      <span class="brand-mark" aria-hidden="true">❄</span>
+      <span>Congelados <strong>Romasil</strong></span>
+    </a>
+    <nav aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="productos.html">Productos</a>
+      <a href="index.html#confianza">Cómo comprar</a>
+      <a href="fichas-productos.html">Fichas</a>
+      <a href="confianza-y-cumplimiento.html">Información legal</a>
+      <a href="politica-de-privacidad.html">Privacidad</a>
+    </nav>
+    <button class="cart-button" id="openCart" type="button" aria-label="Abrir carrito, 0 productos">
+      <span>Tu pedido</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </header>
+
+  <main class="products-page">
+    <section class="catalog-hero">
+      <p class="eyebrow">Catálogo completo</p>
+      <h1>Congelados para todos los días.</h1>
+      <p>Filtra por categoría, revisa cada ficha y arma una solicitud de pedido. Confirmaremos disponibilidad, total y despacho antes de la compra.</p>
+    </section>
+
+    <section class="catalog-section" id="catalogo">
+      <div class="section-heading">
+        <div><p class="eyebrow dark">Elige tu categoría</p><h2>Todos los productos</h2></div>
+        <p>Precios referenciales por formato. La disponibilidad se confirma antes de coordinar la entrega.</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filtrar productos por categoría">
+        <button class="filter active" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+        <button class="filter" type="button" data-filter="vacuno" aria-pressed="false">Vacuno</button>
+        <button class="filter" type="button" data-filter="cerdo" aria-pressed="false">Cerdo</button>
+        <button class="filter" type="button" data-filter="pollo" aria-pressed="false">Pollo</button>
+        <button class="filter" type="button" data-filter="pescados" aria-pressed="false">Pescados</button>
+        <button class="filter" type="button" data-filter="mariscos" aria-pressed="false">Mariscos</button>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <article class="product-card" id="plateada" data-category="vacuno" data-id="plateada" data-name="Plateada de vacuno" data-price="8990">
+          <div class="product-art beef"><span>🥩</span><small>Vacuno</small></div>
+          <div class="product-info"><p class="product-kicker">Corte versátil · 1 kg</p><h3>Plateada de vacuno</h3><p>Ideal para horno, olla o cocción lenta. Envasada al vacío.</p><a class="product-detail-link" href="fichas-productos.html#plateada">Ver ficha completa</a><div class="product-footer"><strong>$8.990</strong><button class="add-button" type="button">Agregar</button></div></div>
+        </article>
+        <article class="product-card" id="salmon" data-category="pescados" data-id="salmon" data-name="Porciones de salmón" data-price="10990">
+          <div class="product-art salmon"><span>🐟</span><small>Más pedido</small></div>
+          <div class="product-info"><p class="product-kicker">Sin piel · 800 g</p><h3>Porciones de salmón</h3><p>Porciones individuales, listas para sartén, horno o air fryer.</p><a class="product-detail-link" href="fichas-productos.html#salmon">Ver ficha completa</a><div class="product-footer"><strong>$10.990</strong><button class="add-button" type="button">Agregar</button></div></div>
+        </article>
+        <article class="product-card" id="pollo" data-category="pollo" data-id="pollo" data-name="Pechuga de pollo" data-price="6490">
+          <div class="product-art chicken"><span>◒</span><small>Pollo</small></div>
+          <div class="product-info"><p class="product-kicker">IQF · 1 kg</p><h3>Pechuga de pollo</h3><p>Filetes separados, fáciles de porcionar y descongelar.</p><a class="product-detail-link" href="fichas-productos.html#pollo">Ver ficha completa</a><div class="product-footer"><strong>$6.490</strong><button class="add-button" type="button">Agregar</button></div></div>
+        </article>
+        <article class="product-card" id="merluza" data-category="pescados" data-id="merluza" data-name="Filetes de merluza" data-price="7990">
+          <div class="product-art fish"><span>〰</span><small>Pescado</small></div>
+          <div class="product-info"><p class="product-kicker">Filetes · 1 kg</p><h3>Filetes de merluza</h3><p>Suaves y rendidores, perfectos para comidas de todos los días.</p><a class="product-detail-link" href="fichas-productos.html#merluza">Ver ficha completa</a><div class="product-footer"><strong>$7.990</strong><button class="add-button" type="button">Agregar</button></div></div>
+        </article>
+        <article class="product-card" id="hamburguesas" data-category="vacuno" data-id="hamburguesas" data-name="Hamburguesas premium" data-price="8490">
+          <div class="product-art burger"><span>●</span><small>Vacuno</small></div>
+          <div class="product-info"><p class="product-kicker">8 unidades · 800 g</p><h3>Hamburguesas premium</h3><p>Jugosas y listas para cocinar desde congelado.</p><a class="product-detail-link" href="fichas-productos.html#hamburguesas">Ver ficha completa</a><div class="product-footer"><strong>$8.490</strong><button class="add-button" type="button">Agregar</button></div></div>
+        </article>
+        <article class="product-card" id="camaron" data-category="mariscos" data-id="camaron" data-name="Camarón pelado" data-price="9990">
+          <div class="product-art shrimp"><span>◠</span><small>Mariscos</small></div>
+          <div class="product-info"><p class="product-kicker">Calibre mediano · 500 g</p><h3>Camarón pelado</h3><p>Limpio y congelado individualmente para usar solo lo necesario.</p><a class="product-detail-link" href="fichas-productos.html#camaron">Ver ficha completa</a><div class="product-footer"><strong>$9.990</strong><button class="add-button" type="button">Agregar</button></div></div>
+        </article>
+      </div>
+
+      <div class="filter-empty" id="filterEmpty" hidden role="status">
+        <span aria-hidden="true">❄</span>
+        <h3>Aún no hay productos en esta categoría</h3>
+        <p>Estamos preparando nuevas opciones. Puedes revisar otra categoría mientras tanto.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="index.html"><span class="brand-mark">❄</span><span>Congelados <strong>Romasil</strong></span></a>
+    <nav class="footer-links" aria-label="Información legal">
+      <a href="fichas-productos.html">Fichas de productos</a>
+      <a href="confianza-y-cumplimiento.html">Confianza y cumplimiento</a>
+      <a href="politica-de-privacidad.html">Privacidad</a>
+    </nav>
+    <p class="legal">© <span id="year"></span> Congelados Romasil</p>
+  </footer>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-header"><div><p class="eyebrow dark">Resumen</p><h2 id="cartTitle">Tu pedido</h2></div><button class="icon-button" id="closeCart" type="button" aria-label="Cerrar carrito">×</button></div>
+    <div class="cart-items" id="cartItems"><div class="empty-cart"><span>❄</span><h3>Tu pedido está vacío</h3><p>Agrega productos del catálogo para comenzar.</p></div></div>
+    <div class="cart-summary" id="cartSummary" hidden><div><span>Subtotal referencial</span><strong id="cartTotal">$0</strong></div><p>El despacho se cotiza según comuna.</p><button class="button primary full" id="checkoutButton" type="button">Solicitar pedido</button></div>
+  </aside>
+
+  <dialog id="checkoutDialog" aria-labelledby="checkoutTitle">
+    <form id="checkoutForm">
+      <button class="icon-button dialog-close" type="button" id="closeDialog" aria-label="Cerrar">×</button>
+      <p class="eyebrow dark">Último paso</p><h2 id="checkoutTitle">Datos para confirmar</h2><p class="dialog-copy">Prepararemos el resumen para coordinar disponibilidad y despacho.</p>
+      <label>Nombre<input name="name" autocomplete="name" required placeholder="Tu nombre"></label>
+      <label>Teléfono<input name="phone" autocomplete="tel" inputmode="tel" required placeholder="+56 9 1234 5678"></label>
+      <label>Comuna<input name="commune" autocomplete="address-level2" required placeholder="Ej. Ñuñoa"></label>
+      <label class="consent"><input type="checkbox" required> <span>He leído la <a href="politica-de-privacidad.html" target="_blank" rel="noopener">política de privacidad</a> y autorizo el uso de mis datos para preparar esta solicitud.</span></label>
+      <button class="button primary full" type="submit">Preparar solicitud</button>
+      <p class="form-note">No se realizará ningún cobro ni se confirmará una compra en esta etapa.</p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

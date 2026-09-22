@@ -56,15 +56,11 @@
           "about": { "@id": "https://congelados-romasil.netlify.app/#organization" },
           "mainEntity": {
             "@type": "ItemList",
-            "name": "Catálogo de productos congelados",
-            "numberOfItems": 6,
+            "name": "Productos destacados",
+            "numberOfItems": 2,
             "itemListElement": [
               { "@type": "ListItem", "position": 1, "name": "Plateada de vacuno", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#plateada" },
-              { "@type": "ListItem", "position": 2, "name": "Porciones de salmón", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#salmon" },
-              { "@type": "ListItem", "position": 3, "name": "Pechuga de pollo", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#pollo" },
-              { "@type": "ListItem", "position": 4, "name": "Filetes de merluza", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#merluza" },
-              { "@type": "ListItem", "position": 5, "name": "Hamburguesas premium", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#hamburguesas" },
-              { "@type": "ListItem", "position": 6, "name": "Camarón pelado", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#camaron" }
+              { "@type": "ListItem", "position": 2, "name": "Porciones de salmón", "url": "https://congelados-romasil.netlify.app/fichas-productos.html#salmon" }
             ]
           }
         }
@@ -80,7 +76,7 @@
     </a>
     <nav aria-label="Navegación principal">
       <a href="index.html">Inicio</a>
-      <a href="index.html#catalogo">Productos</a>
+      <a href="productos.html">Productos</a>
       <a href="index.html#confianza">Cómo comprar</a>
       <a href="fichas-productos.html">Fichas</a>
       <a href="confianza-y-cumplimiento.html">Información legal</a>
@@ -99,7 +95,7 @@
         <h1>Carne y pescado congelado, <em>directo a tu mesa.</em></h1>
         <p class="hero-lead">Compra carnes, pescados y mariscos congelados con despacho programado en la Región Metropolitana.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#catalogo">Ver productos</a>
+          <a class="button primary" href="productos.html">Ver productos</a>
           <a class="text-link" href="#confianza">Ver cobertura <span aria-hidden="true">→</span></a>
         </div>
         <ul class="trust-row" aria-label="Beneficios">
@@ -118,48 +114,26 @@
       </div>
     </section>
 
-    <section class="catalog-section" id="catalogo">
+    <section class="catalog-section featured-section" id="destacados">
       <div class="section-heading">
         <div>
-          <p class="eyebrow dark">Selección de la semana</p>
-          <h2>Elige, agrega y arma tu pedido</h2>
+          <p class="eyebrow dark">Productos destacados</p>
+          <h2>Dos favoritos para comenzar</h2>
         </div>
-        <p>Precios referenciales por formato. El total y la disponibilidad se confirman antes del despacho.</p>
+        <p>Una vista rápida de nuestro catálogo. Explora todos los productos y filtra por categoría en la sección Productos.</p>
       </div>
 
-      <div class="filters" role="group" aria-label="Filtrar productos">
-        <button class="filter active" type="button" data-filter="todos" aria-pressed="true">Todos</button>
-        <button class="filter" type="button" data-filter="carne" aria-pressed="false">Carnes</button>
-        <button class="filter" type="button" data-filter="pescado" aria-pressed="false">Pescados</button>
-        <button class="filter" type="button" data-filter="mariscos" aria-pressed="false">Mariscos</button>
-      </div>
-
-      <div class="product-grid" id="productGrid">
-        <article class="product-card" id="plateada" data-category="carne" data-id="plateada" data-name="Plateada de vacuno" data-price="8990">
+      <div class="product-grid featured-products" id="productGrid">
+        <article class="product-card" id="plateada" data-category="vacuno" data-id="plateada" data-name="Plateada de vacuno" data-price="8990">
           <div class="product-art beef"><span>🥩</span><small>Vacuno</small></div>
           <div class="product-info"><p class="product-kicker">Corte versátil · 1 kg</p><h3>Plateada de vacuno</h3><p>Ideal para horno, olla o cocción lenta. Envasada al vacío.</p><a class="product-detail-link" href="fichas-productos.html#plateada">Ver ficha completa</a><div class="product-footer"><strong>$8.990</strong><button class="add-button" type="button">Agregar</button></div></div>
         </article>
-        <article class="product-card" id="salmon" data-category="pescado" data-id="salmon" data-name="Porciones de salmón" data-price="10990">
+        <article class="product-card" id="salmon" data-category="pescados" data-id="salmon" data-name="Porciones de salmón" data-price="10990">
           <div class="product-art salmon"><span>🐟</span><small>Más pedido</small></div>
           <div class="product-info"><p class="product-kicker">Sin piel · 800 g</p><h3>Porciones de salmón</h3><p>Porciones individuales, listas para sartén, horno o air fryer.</p><a class="product-detail-link" href="fichas-productos.html#salmon">Ver ficha completa</a><div class="product-footer"><strong>$10.990</strong><button class="add-button" type="button">Agregar</button></div></div>
         </article>
-        <article class="product-card" id="pollo" data-category="carne" data-id="pollo" data-name="Pechuga de pollo" data-price="6490">
-          <div class="product-art chicken"><span>◒</span><small>Sin piel</small></div>
-          <div class="product-info"><p class="product-kicker">IQF · 1 kg</p><h3>Pechuga de pollo</h3><p>Filetes separados, fáciles de porcionar y descongelar.</p><a class="product-detail-link" href="fichas-productos.html#pollo">Ver ficha completa</a><div class="product-footer"><strong>$6.490</strong><button class="add-button" type="button">Agregar</button></div></div>
-        </article>
-        <article class="product-card" id="merluza" data-category="pescado" data-id="merluza" data-name="Filetes de merluza" data-price="7990">
-          <div class="product-art fish"><span>〰</span><small>Sin espinas</small></div>
-          <div class="product-info"><p class="product-kicker">Filetes · 1 kg</p><h3>Filetes de merluza</h3><p>Suaves y rendidores, perfectos para comidas de todos los días.</p><a class="product-detail-link" href="fichas-productos.html#merluza">Ver ficha completa</a><div class="product-footer"><strong>$7.990</strong><button class="add-button" type="button">Agregar</button></div></div>
-        </article>
-        <article class="product-card" id="hamburguesas" data-category="carne" data-id="hamburguesas" data-name="Hamburguesas premium" data-price="8490">
-          <div class="product-art burger"><span>●</span><small>8 unidades</small></div>
-          <div class="product-info"><p class="product-kicker">Vacuno · 800 g</p><h3>Hamburguesas premium</h3><p>Jugosas, sin rellenos y listas para cocinar desde congelado.</p><a class="product-detail-link" href="fichas-productos.html#hamburguesas">Ver ficha completa</a><div class="product-footer"><strong>$8.490</strong><button class="add-button" type="button">Agregar</button></div></div>
-        </article>
-        <article class="product-card" id="camaron" data-category="mariscos" data-id="camaron" data-name="Camarón pelado" data-price="9990">
-          <div class="product-art shrimp"><span>◠</span><small>Listo para usar</small></div>
-          <div class="product-info"><p class="product-kicker">Calibre mediano · 500 g</p><h3>Camarón pelado</h3><p>Limpio y congelado individualmente para usar solo lo necesario.</p><a class="product-detail-link" href="fichas-productos.html#camaron">Ver ficha completa</a><div class="product-footer"><strong>$9.990</strong><button class="add-button" type="button">Agregar</button></div></div>
-        </article>
       </div>
+      <div class="featured-actions"><a class="button primary dark" href="productos.html">Ver todos los productos</a></div>
     </section>
 
     <section class="process-section" id="confianza">
@@ -199,7 +173,7 @@
             <span>Providencia</span><span>Ñuñoa</span><span>Las Condes</span>
           </div>
           <p>El costo y la franja horaria se confirman antes de aceptar el pedido. Mapa referencial, no a escala.</p>
-          <a class="button primary" href="#catalogo">Armar mi pedido</a>
+          <a class="button primary" href="productos.html">Armar mi pedido</a>
         </div>
       </div>
     </section>
