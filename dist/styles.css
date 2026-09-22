@@ -94,6 +94,36 @@ a {
 .header-action:hover {
   color: #fff;
 }
+.section-nav {
+  position: sticky;
+  top: 78px;
+  z-index: 19;
+  display: flex;
+  justify-content: center;
+  gap: clamp(18px, 3vw, 42px);
+  padding: 13px clamp(20px, 5vw, 76px);
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.97);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 22px rgba(7, 28, 38, 0.07);
+  scrollbar-width: none;
+  backdrop-filter: blur(12px);
+}
+.section-nav::-webkit-scrollbar {
+  display: none;
+}
+.section-nav a {
+  color: #40555d;
+  flex: 0 0 auto;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.section-nav a:hover,
+.section-nav a:focus-visible {
+  color: #08727d;
+}
 .cart-button,
 .add-button,
 .filter,
@@ -870,9 +900,11 @@ input:focus {
   border-color: var(--blue);
   color: var(--ink);
 }
-.policy-section,
 .product-sheet {
   scroll-margin-top: 100px;
+}
+.policy-section {
+  scroll-margin-top: 155px;
 }
 .policy-section {
   padding: 66px 0;
@@ -1087,6 +1119,18 @@ input:focus {
   }
   .header-action {
     display: none;
+  }
+  .section-nav {
+    top: 68px;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 11px 17px;
+  }
+  .section-nav a {
+    font-size: 0.82rem;
+  }
+  .policy-section {
+    scroll-margin-top: 135px;
   }
   .hero {
     min-height: 0;
