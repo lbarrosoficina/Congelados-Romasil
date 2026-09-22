@@ -535,14 +535,16 @@ a {
 }
 .coverage-map {
   position: relative;
+  margin: 0;
   padding: 14px 14px 38px;
   background: var(--ice);
 }
-.coverage-map iframe {
+.coverage-map img {
   display: block;
   width: 100%;
-  height: clamp(300px, 37vw, 430px);
-  border: 0;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
   border-radius: 10px;
   background: #c9e7e9;
 }
@@ -1140,9 +1142,6 @@ input:focus {
   }
   .coverage-map {
     padding: 8px 8px 34px;
-  }
-  .coverage-map iframe {
-    height: 300px;
   }
   .coverage-copy {
     padding: 25px 22px 28px;
