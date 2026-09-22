@@ -526,6 +526,9 @@ a {
 }
 .coverage-card {
   align-self: center;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 18px;
@@ -542,9 +545,9 @@ a {
 .coverage-map img {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 10px;
   background: #c9e7e9;
 }
