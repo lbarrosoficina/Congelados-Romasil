@@ -32,7 +32,10 @@
       <a href="confianza-y-cumplimiento.html">Confianza</a>
       <a href="politica-de-privacidad.html">Privacidad</a>
     </nav>
-    <a class="header-action" href="productos.html">Ver productos</a>
+    <button class="cart-button" id="openCart" type="button" aria-label="Abrir carrito, 0 productos">
+      <span>Tu pedido</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
   </header>
 
   <main class="legal-page">
@@ -83,7 +86,7 @@
     <section class="policy-section" id="funcionamiento">
       <div class="policy-heading"><span>03</span><div><p class="eyebrow dark">Cómo funciona hoy</p><h2>El formulario no envía tus datos</h2></div></div>
       <ul class="plain-list">
-        <li>El carrito se mantiene temporalmente en la memoria de tu navegador y se borra al cerrar o recargar la página.</li>
+        <li>El carrito se guarda temporalmente en el almacenamiento de sesión de tu navegador para mantener productos y cantidades al navegar entre las páginas del sitio. Se elimina cuando finaliza esa sesión del navegador.</li>
         <li>Al completar el formulario, la información se procesa en tu dispositivo para preparar un resumen.</li>
         <li>Si el navegador lo permite, ese resumen se copia al portapapeles. La web no lo envía ni lo guarda automáticamente en una base de datos propia.</li>
         <li>Solo habrá una comunicación externa si tú decides compartir el resumen por el canal de contacto que la empresa habilite. La política del proveedor de ese canal también será aplicable.</li>
@@ -107,6 +110,7 @@
       <div class="policy-grid">
         <article><h3>Netlify</h3><p>Aloja y distribuye la web. Puede procesar registros técnicos necesarios para disponibilidad, rendimiento, prevención de abuso y seguridad.</p></article>
         <article><h3>Google Fonts</h3><p>Entrega las tipografías utilizadas por la web. Al cargar estos recursos, Google puede recibir información técnica como la dirección IP y datos del navegador.</p></article>
+        <article><h3>OpenStreetMap</h3><p>Entrega el mapa real de cobertura. Al visualizarlo, OpenStreetMap puede recibir la dirección IP y datos técnicos del navegador necesarios para cargar el mapa.</p></article>
         <article><h3>Canal elegido por el cliente</h3><p>Si compartes el resumen mediante correo, teléfono o mensajería, el proveedor de ese servicio tratará la información conforme a sus propias condiciones.</p></article>
       </div>
       <p>Estos proveedores pueden operar infraestructura fuera de Chile. No vendemos ni cedemos datos personales a terceros para sus propios fines publicitarios.</p>
@@ -114,7 +118,7 @@
 
     <section class="policy-section" id="conservacion">
       <div class="policy-heading"><span>06</span><div><p class="eyebrow dark">Solo el tiempo necesario</p><h2>Conservación y eliminación</h2></div></div>
-      <p>Esta web no conserva automáticamente los datos del formulario ni el contenido del carrito. Si envías la solicitud por un canal externo, Congelados Romasil deberá conservarla solo durante el tiempo necesario para atenderla, gestionar la relación comercial y cumplir obligaciones legales aplicables.</p>
+      <p>Esta web no envía automáticamente los datos del formulario a una base propia. El contenido del carrito permanece temporalmente en el almacenamiento de sesión del navegador y se elimina al finalizar esa sesión. Si envías la solicitud por un canal externo, Congelados Romasil deberá conservarla solo durante el tiempo necesario para atenderla, gestionar la relación comercial y cumplir obligaciones legales aplicables.</p>
       <dl class="data-grid compact">
         <div><dt>Consultas no convertidas en compra</dt><dd class="placeholder">—</dd></div>
         <div><dt>Pedidos y documentos comerciales</dt><dd class="placeholder">—</dd></div>
@@ -175,5 +179,28 @@
     </nav>
     <p class="legal">© 2026 Congelados Romasil</p>
   </footer>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-header"><div><p class="eyebrow dark">Resumen</p><h2 id="cartTitle">Tu pedido</h2></div><button class="icon-button" id="closeCart" type="button" aria-label="Cerrar carrito">×</button></div>
+    <div class="cart-items" id="cartItems"><div class="empty-cart"><span>❄</span><h3>Tu pedido está vacío</h3><p>Agrega productos del catálogo para comenzar.</p></div></div>
+    <div class="cart-summary" id="cartSummary" hidden><div><span>Subtotal referencial</span><strong id="cartTotal">$0</strong></div><p>El despacho se cotiza según comuna.</p><button class="button primary full" id="checkoutButton" type="button">Solicitar pedido</button></div>
+  </aside>
+
+  <dialog id="checkoutDialog" aria-labelledby="checkoutTitle">
+    <form id="checkoutForm">
+      <button class="icon-button dialog-close" type="button" id="closeDialog" aria-label="Cerrar">×</button>
+      <p class="eyebrow dark">Último paso</p><h2 id="checkoutTitle">Datos para confirmar</h2><p class="dialog-copy">Prepararemos el resumen para coordinar disponibilidad y despacho.</p>
+      <label>Nombre<input name="name" autocomplete="name" required placeholder="Tu nombre"></label>
+      <label>Teléfono<input name="phone" autocomplete="tel" inputmode="tel" required placeholder="+56 9 1234 5678"></label>
+      <label>Comuna<input name="commune" autocomplete="address-level2" required placeholder="Ej. Ñuñoa"></label>
+      <label class="consent"><input type="checkbox" required> <span>He leído la <a href="politica-de-privacidad.html" target="_blank" rel="noopener">política de privacidad</a> y autorizo el uso de mis datos para preparar esta solicitud.</span></label>
+      <button class="button primary full" type="submit">Preparar solicitud</button>
+      <p class="form-note">No se realizará ningún cobro ni se confirmará una compra en esta etapa.</p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
 </body>
 </html>

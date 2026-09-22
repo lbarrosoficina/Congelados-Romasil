@@ -32,7 +32,10 @@
       <a href="confianza-y-cumplimiento.html">Confianza</a>
       <a href="politica-de-privacidad.html">Privacidad</a>
     </nav>
-    <a class="header-action" href="productos.html">Ver productos</a>
+    <button class="cart-button" id="openCart" type="button" aria-label="Abrir carrito, 0 productos">
+      <span>Tu pedido</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
   </header>
 
   <main class="legal-page">
@@ -64,12 +67,6 @@
       </div>
       <h3>Precios y disponibilidad</h3>
       <p>Los valores mostrados actualmente son referenciales y corresponden al formato indicado. Antes de aceptar el pedido se debe informar el precio total, el despacho y cualquier otro cobro. Si un producto no tiene stock, se informará antes de confirmar la compra.</p>
-      <dl class="data-grid compact">
-        <div><dt>Medios de pago aceptados</dt><dd class="placeholder">—</dd></div>
-        <div><dt>Vigencia de precios</dt><dd class="placeholder">—</dd></div>
-        <div><dt>Canal de confirmación</dt><dd class="placeholder">—</dd></div>
-        <div><dt>Emisión de boleta o factura</dt><dd class="placeholder">—</dd></div>
-      </dl>
     </section>
 
     <section class="policy-section" id="despachos">
@@ -120,5 +117,28 @@
     </nav>
     <p class="legal">© 2026 Congelados Romasil</p>
   </footer>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-header"><div><p class="eyebrow dark">Resumen</p><h2 id="cartTitle">Tu pedido</h2></div><button class="icon-button" id="closeCart" type="button" aria-label="Cerrar carrito">×</button></div>
+    <div class="cart-items" id="cartItems"><div class="empty-cart"><span>❄</span><h3>Tu pedido está vacío</h3><p>Agrega productos del catálogo para comenzar.</p></div></div>
+    <div class="cart-summary" id="cartSummary" hidden><div><span>Subtotal referencial</span><strong id="cartTotal">$0</strong></div><p>El despacho se cotiza según comuna.</p><button class="button primary full" id="checkoutButton" type="button">Solicitar pedido</button></div>
+  </aside>
+
+  <dialog id="checkoutDialog" aria-labelledby="checkoutTitle">
+    <form id="checkoutForm">
+      <button class="icon-button dialog-close" type="button" id="closeDialog" aria-label="Cerrar">×</button>
+      <p class="eyebrow dark">Último paso</p><h2 id="checkoutTitle">Datos para confirmar</h2><p class="dialog-copy">Prepararemos el resumen para coordinar disponibilidad y despacho.</p>
+      <label>Nombre<input name="name" autocomplete="name" required placeholder="Tu nombre"></label>
+      <label>Teléfono<input name="phone" autocomplete="tel" inputmode="tel" required placeholder="+56 9 1234 5678"></label>
+      <label>Comuna<input name="commune" autocomplete="address-level2" required placeholder="Ej. Ñuñoa"></label>
+      <label class="consent"><input type="checkbox" required> <span>He leído la <a href="politica-de-privacidad.html" target="_blank" rel="noopener">política de privacidad</a> y autorizo el uso de mis datos para preparar esta solicitud.</span></label>
+      <button class="button primary full" type="submit">Preparar solicitud</button>
+      <p class="form-note">No se realizará ningún cobro ni se confirmará una compra en esta etapa.</p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -1,5 +1,13 @@
 const money = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
-const cart = new Map();
+const CART_STORAGE_KEY = 'romasil-session-cart';
+let storedCart = [];
+try {
+  const parsedCart = JSON.parse(sessionStorage.getItem(CART_STORAGE_KEY) || '[]');
+  if (Array.isArray(parsedCart)) storedCart = parsedCart;
+} catch {
+  storedCart = [];
+}
+const cart = new Map(storedCart.map(item => [item.id, item]));
 const drawer = document.querySelector('#cartDrawer');
 const backdrop = document.querySelector('#drawerBackdrop');
 const cartItems = document.querySelector('#cartItems');
@@ -8,6 +16,14 @@ const cartCount = document.querySelector('#cartCount');
 const cartTotal = document.querySelector('#cartTotal');
 const toast = document.querySelector('#toast');
 const checkoutDialog = document.querySelector('#checkoutDialog');
+
+function persistCart() {
+  try {
+    sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify([...cart.values()]));
+  } catch {
+    // El carrito sigue funcionando en memoria si el navegador bloquea el almacenamiento.
+  }
+}
 
 function showToast(message) {
   toast.textContent = message;
@@ -55,6 +71,7 @@ document.querySelectorAll('.add-button').forEach(button => button.addEventListen
   const id = card.dataset.id;
   const existing = cart.get(id);
   cart.set(id, { id, name: card.dataset.name, price: Number(card.dataset.price), quantity: existing ? existing.quantity + 1 : 1 });
+  persistCart();
   renderCart();
   showToast(`${card.dataset.name} agregado`);
 }));
@@ -67,6 +84,7 @@ cartItems.addEventListener('click', event => {
   if (button.dataset.action === 'increase') item.quantity += 1;
   if (button.dataset.action === 'decrease') item.quantity -= 1;
   if (button.dataset.action === 'remove' || item.quantity <= 0) cart.delete(item.id);
+  persistCart();
   renderCart();
 });
 
@@ -100,5 +118,6 @@ document.querySelector('#checkoutForm').addEventListener('submit', event => {
   checkoutDialog.close();
   showToast('Resumen copiado. Ya puedes enviarlo al vendedor.');
 });
-document.querySelector('#year').textContent = new Date().getFullYear();
+const year = document.querySelector('#year');
+if (year) year.textContent = new Date().getFullYear();
 renderCart();

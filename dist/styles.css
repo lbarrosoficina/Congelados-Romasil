@@ -84,16 +84,6 @@ a {
 .topbar nav a:hover {
   color: #fff;
 }
-.header-action {
-  color: var(--blue);
-  font-size: 0.86rem;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.header-action:hover {
-  color: #fff;
-}
 .cart-button,
 .add-button,
 .filter,
@@ -544,13 +534,26 @@ a {
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.28);
 }
 .coverage-map {
-  padding: 16px;
+  position: relative;
+  padding: 14px 14px 38px;
   background: var(--ice);
 }
-.coverage-map svg {
+.coverage-map iframe {
   display: block;
   width: 100%;
-  height: auto;
+  height: clamp(300px, 37vw, 430px);
+  border: 0;
+  border-radius: 10px;
+  background: #c9e7e9;
+}
+.map-attribution {
+  position: absolute;
+  right: 18px;
+  bottom: 11px;
+  color: #08616b;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-underline-offset: 2px;
 }
 .coverage-copy {
   padding: 30px 32px 34px;
@@ -1058,9 +1061,6 @@ input:focus {
   .cart-button > span:first-child {
     display: none;
   }
-  .header-action {
-    display: none;
-  }
   .policy-section {
     scroll-margin-top: 90px;
   }
@@ -1139,7 +1139,10 @@ input:focus {
     grid-column: auto;
   }
   .coverage-map {
-    padding: 8px;
+    padding: 8px 8px 34px;
+  }
+  .coverage-map iframe {
+    height: 300px;
   }
   .coverage-copy {
     padding: 25px 22px 28px;
