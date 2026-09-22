@@ -79,7 +79,6 @@ document.querySelectorAll('.filter').forEach(button => button.addEventListener('
 }));
 
 document.querySelector('#openCart').addEventListener('click', openCart);
-document.querySelector('#deliveryOrder').addEventListener('click', () => { document.querySelector('#catalogo').scrollIntoView(); });
 document.querySelector('#closeCart').addEventListener('click', closeCart);
 backdrop.addEventListener('click', closeCart);
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && drawer.classList.contains('open')) closeCart(); });

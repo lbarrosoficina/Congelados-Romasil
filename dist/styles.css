@@ -147,8 +147,7 @@ a {
 }
 .hero h1,
 .section-heading h2,
-.process-section h2,
-.delivery-section h2 {
+.process-section h2 {
   font-family: "Fraunces", serif;
   letter-spacing: -0.035em;
   line-height: 1.02;
@@ -280,8 +279,7 @@ a {
   gap: 45px;
   margin-bottom: 34px;
 }
-.section-heading h2,
-.delivery-section h2 {
+.section-heading h2 {
   font-size: clamp(2.6rem, 4.5vw, 4.3rem);
 }
 .section-heading > p {
@@ -440,14 +438,15 @@ a {
 }
 .process-section {
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
   background: var(--ink);
   color: #fff;
   padding: 110px clamp(20px, 7vw, 105px);
-  gap: clamp(60px, 10vw, 170px);
+  gap: clamp(50px, 7vw, 110px);
+  align-items: center;
 }
 .process-intro {
-  align-self: center;
+  max-width: 590px;
 }
 .process-section h2 {
   font-size: clamp(2.8rem, 4.8vw, 4.8rem);
@@ -460,7 +459,7 @@ a {
 .process-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 42px 0 0;
 }
 .process-list li {
   display: grid;
@@ -485,70 +484,55 @@ a {
   margin: 0;
   color: #a9bdc2;
 }
-.compliance-section {
-  padding: 96px clamp(20px, 7vw, 105px);
+.coverage-card {
+  align-self: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 18px;
   background: #fff;
-  display: grid;
-  grid-template-columns: minmax(0, 0.82fr) minmax(480px, 1.18fr);
-  gap: clamp(45px, 8vw, 120px);
-  align-items: center;
+  color: var(--ink);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.28);
 }
-.compliance-copy h2 {
-  font-family: "Fraunces", serif;
-  font-size: clamp(2.5rem, 4.3vw, 4.2rem);
-  letter-spacing: -0.035em;
-  line-height: 1.02;
-  margin: 0 0 22px;
-}
-.compliance-copy > p:last-child {
-  color: var(--muted);
-  max-width: 600px;
-}
-.compliance-links {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-.compliance-links a {
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 22px;
-  text-decoration: none;
-  background: var(--paper);
-  transition: 0.2s ease;
-}
-.compliance-links a:hover {
-  border-color: var(--blue);
-  transform: translateY(-2px);
-}
-.compliance-links strong,
-.compliance-links span {
-  display: block;
-}
-.compliance-links strong {
-  margin-bottom: 4px;
-}
-.compliance-links span {
-  color: var(--muted);
-  font-size: 0.84rem;
-}
-.delivery-section {
-  padding: 90px clamp(20px, 7vw, 105px);
+.coverage-map {
+  padding: 16px;
   background: var(--ice);
+}
+.coverage-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.coverage-copy {
+  padding: 30px 32px 34px;
+}
+.coverage-copy h3 {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  margin: 0;
+}
+.coverage-copy > p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 18px 0 0;
+}
+.coverage-copy .button {
+  margin-top: 22px;
+}
+.coverage-chips {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 50px;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
 }
-.delivery-section > div {
-  max-width: 800px;
-}
-.delivery-section p:last-child {
-  max-width: 680px;
-  color: #405b63;
-}
-.delivery-section .button {
-  white-space: nowrap;
+.coverage-chips span {
+  border-radius: 99px;
+  background: var(--ice);
+  color: #08616b;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 12px;
 }
 footer {
   padding: 42px clamp(20px, 6vw, 90px);
@@ -878,9 +862,7 @@ input:focus {
 }
 .hero,
 .catalog-section,
-.process-section,
-.compliance-section,
-.delivery-section {
+.process-section {
   scroll-margin-top: 90px;
 }
 .policy-section {
@@ -1068,18 +1050,11 @@ input:focus {
     grid-template-columns: 1fr;
     gap: 45px;
   }
-  .compliance-section {
-    grid-template-columns: 1fr;
-  }
   .product-sheet {
     grid-template-columns: 1fr;
   }
   .product-sheet-art {
     min-height: 280px;
-  }
-  .delivery-section {
-    align-items: flex-start;
-    flex-direction: column;
   }
   footer {
     grid-template-columns: 1fr 1fr;
@@ -1114,9 +1089,7 @@ input:focus {
   }
   .hero,
   .catalog-section,
-  .process-section,
-  .compliance-section,
-  .delivery-section {
+  .process-section {
     scroll-margin-top: 80px;
   }
   .hero {
@@ -1159,7 +1132,7 @@ input:focus {
     margin-top: 18px;
   }
   .section-heading h2,
-  .delivery-section h2 {
+  .coverage-copy h3 {
     font-size: 2.7rem;
   }
   .product-grid {
@@ -1178,13 +1151,6 @@ input:focus {
     grid-template-columns: 45px 1fr;
     gap: 15px;
   }
-  .delivery-section {
-    padding: 70px 20px;
-  }
-  .compliance-section {
-    padding: 70px 20px;
-  }
-  .compliance-links,
   .policy-grid,
   .data-grid,
   .spec-grid {
@@ -1193,7 +1159,13 @@ input:focus {
   .policy-grid > article:last-child:nth-child(odd) {
     grid-column: auto;
   }
-  .delivery-section .button {
+  .coverage-map {
+    padding: 8px;
+  }
+  .coverage-copy {
+    padding: 25px 22px 28px;
+  }
+  .coverage-copy .button {
     width: 100%;
   }
   footer {
