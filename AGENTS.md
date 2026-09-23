@@ -1,5 +1,14 @@
 # Instrucciones de trabajo del proyecto
 
+## Documentación por área
+
+- Leer `README.md` al comenzar una conversación nueva.
+- Para cambios de la web, leer y mantener `docs/WEB.md`.
+- Para correo, reenvíos y Resend, leer y mantener `docs/CORREO.md`.
+- No mezclar cambios de web y correo si el usuario pidió trabajar solo en una de esas áreas.
+- Actualizar el documento correspondiente cuando cambie la arquitectura, una URL, un proveedor, una regla de reenvío o el procedimiento operativo.
+- No guardar contraseñas, códigos de verificación, claves API ni tokens en la documentación o el repositorio.
+
 ## Cambios y publicaciones
 
 - Acumular los cambios solicitados por el usuario en el repositorio local.
