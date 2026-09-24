@@ -1,0 +1,28 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "congelados-romasil.vercel.app"
+        }
+      ],
+      "destination": "https://congeladosromasil.cl/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.congeladosromasil.cl"
+        }
+      ],
+      "destination": "https://congeladosromasil.cl/:path*",
+      "permanent": true
+    }
+  ]
+}

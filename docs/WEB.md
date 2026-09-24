@@ -1,6 +1,6 @@
 # Operación de la web
 
-Última actualización: 22 de septiembre de 2026.
+Última actualización: 24 de septiembre de 2026.
 
 Este documento cubre solamente la web. Para correo y reenvíos, consultar [CORREO.md](CORREO.md).
 
@@ -57,6 +57,7 @@ Los registros de correo también viven en Cloudflare, pero se documentan por sep
 - Directorio publicado: `dist/`
 - Sitio localmente vinculado con el identificador `979e1d08-16a7-42ba-81b8-6b147527d564`.
 - Los cambios en `main` deben generar un nuevo despliegue automáticamente.
+- `netlify.toml` redirige permanentemente cualquier visita a la URL de Netlify hacia la misma ruta en `https://congeladosromasil.cl`.
 
 ### Vercel
 
@@ -64,7 +65,16 @@ Los registros de correo también viven en Cloudflare, pero se documentan por sep
 - Nombre usado al importarlo: `congelados-romasil`.
 - Los registros del dominio principal y `www` apuntan actualmente a Vercel.
 - Los cambios en `main` deben generar un nuevo despliegue automáticamente.
-- Confirmar en el panel de Vercel la URL terminada en `.vercel.app` antes de documentarla como URL pública estable.
+- URL de producción confirmada: <https://congelados-romasil.vercel.app/>.
+- `vercel.json` define `dist/` como salida y redirige permanentemente la URL `.vercel.app` y `www.congeladosromasil.cl` hacia la misma ruta en el dominio principal.
+- La configuración de Domains debe mantener `congeladosromasil.cl` como dominio de producción. El 23 de septiembre de 2026 se comprobó que `www` ya respondía con una redirección permanente al dominio principal.
+
+## Dominio canónico y SEO
+
+- El único dominio canónico e indexable es `https://congeladosromasil.cl`.
+- Los enlaces `canonical`, Open Graph, datos estructurados, `sitemap.xml` y `robots.txt` utilizan el dominio principal.
+- Netlify funciona como alojamiento secundario y redirige al dominio principal.
+- Vercel sirve el dominio principal. Los alias `www` y `.vercel.app` están cubiertos por redirecciones condicionadas por hostname en `vercel.json`; la configuración de Domains mantiene además la redirección de `www` a nivel de plataforma.
 
 ## Flujo de trabajo por lotes
 
@@ -80,6 +90,7 @@ Los registros de correo también viven en Cloudflare, pero se documentan por sep
 ## Lista de comprobación después de publicar
 
 - La portada carga sin errores.
+- Una dirección inexistente muestra la página `404.html`, sin indexación y con enlaces de recuperación.
 - La navegación es igual en todas las páginas.
 - Las imágenes cargan en escritorio y móvil.
 - El mapa muestra Providencia, Ñuñoa y Las Condes.
@@ -88,12 +99,19 @@ Los registros de correo también viven en Cloudflare, pero se documentan por sep
 - El formulario solicita nombre, teléfono, correo, dirección y comuna.
 - La solicitud llega por correo y después se abre WhatsApp con el resumen.
 - Netlify y Vercel muestran la misma versión.
+- La URL de Netlify, `www` y la URL `.vercel.app` redirigen a la misma ruta del dominio principal con estado permanente.
+- El código fuente de cada página muestra `https://congeladosromasil.cl` en canonical y Open Graph.
+- `https://congeladosromasil.cl/robots.txt` enlaza al sitemap del dominio principal.
 - No se publicaron secretos ni claves API.
 
 ## Estado y asuntos pendientes
 
+- Search Console: propiedad de dominio verificada mediante DNS el 23 de septiembre de 2026. No eliminar el registro TXT de verificación. El sitemap actualizado se debe enviar después de publicar.
+- FormSubmit: el usuario confirmó el 24 de septiembre la recepción del correo de prueba.
+- Publicación del lote autorizada el 24 de septiembre de 2026. Ante un fallo crítico de navegación o pedidos, restaurar el despliegue anterior desde el alojamiento; no modificar DNS ni correo para revertir contenido.
 - El formulario es independiente del alojamiento: usa FormSubmit y después abre WhatsApp.
-- Los metadatos SEO, enlaces canónicos y el sitemap todavía usan la URL de Netlify. Cuando `congeladosromasil.cl` se defina como dominio canónico definitivo, deben migrarse en un solo lote.
+- El dominio canónico ya está migrado a `https://congeladosromasil.cl` en todas las señales SEO del repositorio.
+- Tras publicar, queda verificar mediante una prueba HTTP que Netlify, `www` y `congelados-romasil.vercel.app` redirigen al dominio principal conservando la ruta.
 - Antes de modificar DNS, revisar el impacto sobre web y correo.
 
 ## Diagnóstico rápido

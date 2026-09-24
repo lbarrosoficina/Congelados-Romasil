@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://congelados-romasil.netlify.app/sitemap.xml
+Sitemap: https://congeladosromasil.cl/sitemap.xml

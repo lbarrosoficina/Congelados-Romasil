@@ -1,2 +1,8 @@
 [build]
   publish = "dist"
+
+[[redirects]]
+  from = "https://congelados-romasil.netlify.app/*"
+  to = "https://congeladosromasil.cl/:splat"
+  status = 301
+  force = true

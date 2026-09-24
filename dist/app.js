@@ -22,8 +22,15 @@ const navToggle = document.querySelector('.nav-toggle');
 const primaryNav = document.querySelector('#primaryNav');
 const checkoutForm = document.querySelector('#checkoutForm');
 const formStatus = document.querySelector('#formStatus');
+const pageRegions = document.querySelectorAll('body > header, body > main, body > footer');
 const WHATSAPP_NUMBER = '56962319733';
+const SHIPPING_COST = 3500;
+const FREE_SHIPPING_THRESHOLD = 50000;
 const ORDER_FORM_ENDPOINT = 'https://formsubmit.co/ajax/lbarros.oficina@gmail.com';
+
+function setPageRegionsInert(isInert) {
+  pageRegions.forEach(region => { region.inert = isInert; });
+}
 
 function persistCart() {
   try {
@@ -48,6 +55,7 @@ function openCart() {
   openCartButton.setAttribute('aria-expanded', 'true');
   backdrop.hidden = false;
   document.body.style.overflow = 'hidden';
+  setPageRegionsInert(true);
   closeCartButton.focus();
 }
 
@@ -58,6 +66,7 @@ function closeCart({ restoreFocus = true } = {}) {
   drawer.inert = true;
   backdrop.hidden = true;
   document.body.style.overflow = '';
+  setPageRegionsInert(false);
   if (restoreFocus) openCartButton.focus();
 }
 
@@ -154,7 +163,11 @@ document.addEventListener('keydown', event => {
   if (drawer.classList.contains('open')) closeCart();
   else if (primaryNav?.classList.contains('is-open')) closeNavigation({ restoreFocus: true });
 });
-document.querySelector('#checkoutButton').addEventListener('click', () => { closeCart({ restoreFocus: false }); checkoutDialog.showModal(); });
+document.querySelector('#checkoutButton').addEventListener('click', () => {
+  closeCart({ restoreFocus: false });
+  checkoutDialog.showModal();
+  checkoutForm.elements.name.focus();
+});
 document.querySelector('#closeDialog').addEventListener('click', () => checkoutDialog.close());
 checkoutDialog.addEventListener('close', () => openCartButton.focus());
 checkoutForm.addEventListener('submit', async event => {
@@ -168,9 +181,11 @@ checkoutForm.addEventListener('submit', async event => {
   const data = new FormData(checkoutForm);
   const items = [...cart.values()].map(item => `${item.quantity} × ${item.name}`).join('\n');
   const total = [...cart.values()].reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = total > FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+  const shippingLabel = shipping === 0 ? 'Gratis' : money.format(shipping);
   const addressLine2 = String(data.get('addressLine2') || '').trim();
   const addressDetails = addressLine2 ? `\nDepartamento/casa: ${addressLine2}` : '';
-  const summary = `Hola, quiero solicitar este pedido en Congelados Romasil.\n\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nCorreo electrónico: ${data.get('email')}\nDirección: ${data.get('addressLine1')}${addressDetails}\nComuna: ${data.get('commune')}\n\nProductos:\n${items}\n\nSubtotal referencial: ${money.format(total)}\n\nQuedo atento a la confirmación de stock, total y despacho.`;
+  const summary = `Hola, quiero solicitar este pedido en Congelados Romasil.\n\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nCorreo electrónico: ${data.get('email')}\nDirección: ${data.get('addressLine1')}${addressDetails}\nComuna: ${data.get('commune')}\n\nProductos:\n${items}\n\nSubtotal referencial: ${money.format(total)}\nDespacho: ${shippingLabel}\nTotal referencial: ${money.format(total + shipping)}\n\nQuedo atento a la confirmación de stock, horario de entrega y envío del enlace de pago de Transbank Webpay.`;
   submitButton.disabled = true;
   submitButton.textContent = 'Enviando…';
   formStatus.textContent = 'Registrando tu solicitud de forma segura…';
@@ -197,7 +212,8 @@ checkoutForm.addEventListener('submit', async event => {
       })
     });
     const result = await response.json().catch(() => null);
-    if (!response.ok || result?.success === false) {
+    const submissionSucceeded = result?.success === true || String(result?.success).toLowerCase() === 'true';
+    if (!response.ok || !submissionSucceeded) {
       throw new Error(result?.message || `El servicio de formularios respondió con estado ${response.status}`);
     }
 
@@ -208,7 +224,7 @@ checkoutForm.addEventListener('submit', async event => {
     window.location.assign(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(summary)}`);
   } catch (error) {
     console.error('No fue posible registrar la solicitud', error);
-    formStatus.textContent = 'No pudimos registrar la solicitud por correo. Inténtalo nuevamente en unos minutos.';
+    formStatus.textContent = 'No pudimos registrar la solicitud por correo. Puedes reintentar o continuar directamente por WhatsApp con el botón disponible en este formulario.';
     submitButton.disabled = false;
     submitButton.textContent = 'Enviar solicitud';
   }
