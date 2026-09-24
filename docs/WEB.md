@@ -87,6 +87,14 @@ Los registros de correo también viven en Cloudflare, pero se documentan por sep
 7. Verificar el despliegue de Netlify y Vercel.
 8. Probar la portada, Productos, Cómo comprar, Confianza, Privacidad y el checkout.
 
+## Gestión del catálogo
+
+- Los productos disponibles se publican con `data-available="true"` y su identificador debe figurar también en `AVAILABLE_PRODUCT_IDS` dentro de `dist/app.js`.
+- Los productos temporalmente no disponibles no se eliminan: permanecen en el HTML con `data-available="false"` y el atributo `hidden`, para poder reactivarlos junto con sus imágenes.
+- Las categorías sin productos disponibles también se conservan con `hidden` en los filtros.
+- El filtro del catálogo mantiene oculto cualquier producto marcado como no disponible, incluso si se conserva una sesión antigua del carrito.
+- Al actualizar stock, mantener alineados las tarjetas visibles, los destacados de portada y los datos estructurados JSON-LD.
+
 ## Lista de comprobación después de publicar
 
 - La portada carga sin errores.
@@ -106,6 +114,8 @@ Los registros de correo también viven en Cloudflare, pero se documentan por sep
 
 ## Estado y asuntos pendientes
 
+- El carrito muestra subtotal de productos, despacho y total estimado. El despacho cuesta $3.500 y es gratis desde $50.000 exactos en productos; el mismo umbral se usa en el resumen enviado por el formulario.
+- Los productos marcados con precio `/kg` se estiman en el carrito sobre 1 kg por unidad. El peso real, el total definitivo y el despacho se confirman antes de aceptar el pedido y enviar el enlace de pago.
 - Search Console: propiedad de dominio verificada mediante DNS el 23 de septiembre de 2026. No eliminar el registro TXT de verificación. El sitemap actualizado se debe enviar después de publicar.
 - FormSubmit: el usuario confirmó el 24 de septiembre la recepción del correo de prueba.
 - Publicación del lote autorizada el 24 de septiembre de 2026. Ante un fallo crítico de navegación o pedidos, restaurar el despliegue anterior desde el alojamiento; no modificar DNS ni correo para revertir contenido.

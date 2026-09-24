@@ -1,9 +1,12 @@
 const money = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
 const CART_STORAGE_KEY = 'romasil-session-cart';
+// Mantener esta lista alineada con los productos data-available="true" del catálogo.
+// Así, los productos ocultos permanecen en el HTML para una futura reactivación, pero no se pueden pedir por un carrito antiguo.
+const AVAILABLE_PRODUCT_IDS = new Set(['atun-steak', 'salmon-nacional', 'camaron-ecuatoriano', 'chorito', 'ostion-media-concha', 'ostion-sin-coral']);
 let storedCart = [];
 try {
   const parsedCart = JSON.parse(sessionStorage.getItem(CART_STORAGE_KEY) || '[]');
-  if (Array.isArray(parsedCart)) storedCart = parsedCart;
+  if (Array.isArray(parsedCart)) storedCart = parsedCart.filter(item => AVAILABLE_PRODUCT_IDS.has(item.id));
 } catch {
   storedCart = [];
 }
@@ -14,6 +17,9 @@ const cartItems = document.querySelector('#cartItems');
 const cartSummary = document.querySelector('#cartSummary');
 const cartCount = document.querySelector('#cartCount');
 const cartTotal = document.querySelector('#cartTotal');
+const cartShipping = document.querySelector('#cartShipping');
+const cartGrandTotal = document.querySelector('#cartGrandTotal');
+const cartShippingNote = document.querySelector('#cartShippingNote');
 const toast = document.querySelector('#toast');
 const checkoutDialog = document.querySelector('#checkoutDialog');
 const openCartButton = document.querySelector('#openCart');
@@ -101,22 +107,32 @@ function renderCart() {
   openCartButton.setAttribute('aria-label', `Abrir carrito, ${count} productos`);
   cartSummary.hidden = items.length === 0;
   cartTotal.textContent = money.format(total);
+  const shipping = total >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+  cartShipping.textContent = shipping === 0 ? 'Gratis' : money.format(shipping);
+  cartGrandTotal.textContent = money.format(total + shipping);
+  const shippingNote = shipping === 0
+    ? 'Despacho gratis desde $50.000 en productos.'
+    : `Despacho gratis desde $50.000 en productos. Te faltan ${money.format(FREE_SHIPPING_THRESHOLD - total)}.`;
+  cartShippingNote.textContent = items.some(item => item.pricedByKilo)
+    ? `${shippingNote} Los productos por kg se estiman con 1 kg por unidad; el total y el despacho final se confirman según el peso real.`
+    : shippingNote;
   if (!items.length) {
     cartItems.innerHTML = '<div class="empty-cart"><span>❄</span><h3>Tu pedido está vacío</h3><p>Agrega productos del catálogo para comenzar.</p></div>';
     return;
   }
   cartItems.innerHTML = items.map(item => `
     <div class="cart-line">
-      <div><h3>${item.name}</h3><p>${money.format(item.price)} c/u</p><div class="quantity"><button type="button" data-action="decrease" data-id="${item.id}" aria-label="Quitar una unidad de ${item.name}">−</button><strong>${item.quantity}</strong><button type="button" data-action="increase" data-id="${item.id}" aria-label="Agregar una unidad de ${item.name}">+</button></div><button class="remove" type="button" data-action="remove" data-id="${item.id}" aria-label="Eliminar ${item.name} del pedido">Eliminar</button></div>
+      <div><h3>${item.name}</h3><p>${money.format(item.price)} ${item.pricedByKilo ? '/kg · estimado por 1 kg' : 'c/u'}</p><div class="quantity"><button type="button" data-action="decrease" data-id="${item.id}" aria-label="Quitar una unidad de ${item.name}">−</button><strong>${item.quantity}</strong><button type="button" data-action="increase" data-id="${item.id}" aria-label="Agregar una unidad de ${item.name}">+</button></div><button class="remove" type="button" data-action="remove" data-id="${item.id}" aria-label="Eliminar ${item.name} del pedido">Eliminar</button></div>
       <strong>${money.format(item.price * item.quantity)}</strong>
     </div>`).join('');
 }
 
-document.querySelectorAll('.add-button').forEach(button => button.addEventListener('click', () => {
+document.querySelectorAll('.product-card[data-available="true"] .add-button').forEach(button => button.addEventListener('click', () => {
   const card = button.closest('.product-card');
   const id = card.dataset.id;
   const existing = cart.get(id);
-  cart.set(id, { id, name: card.dataset.name, price: Number(card.dataset.price), quantity: existing ? existing.quantity + 1 : 1 });
+  const pricedByKilo = card.querySelector('.product-footer strong')?.textContent.includes('/kg') || false;
+  cart.set(id, { id, name: card.dataset.name, price: Number(card.dataset.price), pricedByKilo, quantity: existing ? existing.quantity + 1 : 1 });
   persistCart();
   renderCart();
   showToast(`${card.dataset.name} agregado`);
@@ -141,7 +157,8 @@ document.querySelectorAll('.filter').forEach(button => button.addEventListener('
   const filter = button.dataset.filter;
   let visibleProducts = 0;
   document.querySelectorAll('.product-card').forEach(card => {
-    card.hidden = filter !== 'todos' && card.dataset.category !== filter;
+    const isAvailable = card.dataset.available === 'true';
+    card.hidden = !isAvailable || (filter !== 'todos' && card.dataset.category !== filter);
     if (!card.hidden) visibleProducts += 1;
   });
   const emptyState = document.querySelector('#filterEmpty');
@@ -179,13 +196,15 @@ checkoutForm.addEventListener('submit', async event => {
 
   const submitButton = checkoutForm.querySelector('button[type="submit"]');
   const data = new FormData(checkoutForm);
-  const items = [...cart.values()].map(item => `${item.quantity} × ${item.name}`).join('\n');
+  const cartItemsList = [...cart.values()];
+  const items = cartItemsList.map(item => `${item.quantity} × ${item.name}${item.pricedByKilo ? ' (precio por kg; peso por confirmar)' : ''}`).join('\n');
   const total = [...cart.values()].reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = total > FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+  const shipping = total >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
   const shippingLabel = shipping === 0 ? 'Gratis' : money.format(shipping);
   const addressLine2 = String(data.get('addressLine2') || '').trim();
   const addressDetails = addressLine2 ? `\nDepartamento/casa: ${addressLine2}` : '';
-  const summary = `Hola, quiero solicitar este pedido en Congelados Romasil.\n\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nCorreo electrónico: ${data.get('email')}\nDirección: ${data.get('addressLine1')}${addressDetails}\nComuna: ${data.get('commune')}\n\nProductos:\n${items}\n\nSubtotal referencial: ${money.format(total)}\nDespacho: ${shippingLabel}\nTotal referencial: ${money.format(total + shipping)}\n\nQuedo atento a la confirmación de stock, horario de entrega y envío del enlace de pago de Transbank Webpay.`;
+  const weightNote = cartItemsList.some(item => item.pricedByKilo) ? '\nLos productos por kg se estiman con 1 kg por unidad. El total y el despacho final dependen del peso real.' : '';
+  const summary = `Hola, quiero solicitar este pedido en Congelados Romasil.\n\nNombre: ${data.get('name')}\nTeléfono: ${data.get('phone')}\nCorreo electrónico: ${data.get('email')}\nDirección: ${data.get('addressLine1')}${addressDetails}\nComuna: ${data.get('commune')}\n\nProductos:\n${items}\n\nSubtotal referencial: ${money.format(total)}\nDespacho: ${shippingLabel}\nTotal referencial: ${money.format(total + shipping)}${weightNote}\n\nQuedo atento a la confirmación de stock, horario de entrega y envío del enlace de pago de Transbank Webpay.`;
   submitButton.disabled = true;
   submitButton.textContent = 'Enviando…';
   formStatus.textContent = 'Registrando tu solicitud de forma segura…';

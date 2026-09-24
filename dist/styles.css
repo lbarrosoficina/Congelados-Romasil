@@ -842,9 +842,22 @@ footer {
 .cart-summary > div {
   display: flex;
   justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 6px;
   font-size: 1.05rem;
 }
 .cart-summary strong {
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+.cart-summary .cart-grand-total {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: 12px;
+  font-weight: 700;
+}
+.cart-summary .cart-grand-total strong {
   font-size: 1.3rem;
 }
 .cart-summary p {

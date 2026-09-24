@@ -70,7 +70,7 @@
         <article><h3>3. Confirmación expresa</h3><p>El pedido solo se entiende aceptado cuando el vendedor confirma por escrito las condiciones y el cliente las acepta.</p></article>
       </div>
       <h3>Precios y disponibilidad</h3>
-      <p>Los valores mostrados actualmente son referenciales y corresponden al formato indicado. Antes de aceptar el pedido se debe informar el precio total, el despacho y cualquier otro cobro. Si un producto no tiene stock, se informará antes de confirmar la compra.</p>
+      <p>Los valores mostrados son referenciales y corresponden al formato indicado. En productos vendidos por kilo, el valor final depende del peso real del corte disponible; el carrito usa 1 kg por unidad solo para estimar el total. Antes de aceptar el pedido informaremos el peso disponible, el precio total, el despacho y cualquier otro cobro. Si un producto no tiene stock, se informará antes de confirmar la compra.</p>
       <h3>Medio de pago</h3>
       <p>El pago se realiza con tarjeta de crédito o débito mediante un enlace de Transbank Webpay enviado después de confirmar stock, despacho y total. Congelados Romasil no solicita ni recibe el número completo de la tarjeta, su código de seguridad ni las credenciales bancarias.</p>
     </section>
@@ -80,7 +80,7 @@
       <p>Las entregas se coordinan para comunas seleccionadas de la Región Metropolitana. Los productos congelados deben transportarse y conservarse a temperatura controlada, siguiendo además las indicaciones del rótulo del fabricante.</p>
       <dl class="data-grid compact">
         <div><dt>Comunas con cobertura</dt><dd>Providencia, Ñuñoa y Las Condes</dd></div>
-        <div><dt>Costo de despacho</dt><dd>$3.500. Gratis en compras sobre $50.000</dd></div>
+        <div><dt>Costo de despacho</dt><dd>$3.500. Gratis desde $50.000 en productos</dd></div>
         <div><dt>Pedido mínimo</dt><dd>Sin pedido mínimo</dd></div>
         <div><dt>Días y horarios</dt><dd>Se coordinan según disponibilidad. Antes de aceptar el pedido informamos por escrito la fecha y la franja estimada de entrega.</dd></div>
         <div><dt>Plazo referencial</dt><dd>24–48 horas, sujeto a confirmación</dd></div>
@@ -130,7 +130,7 @@
   <aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true" inert>
     <div class="drawer-header"><div><p class="eyebrow dark">Resumen</p><h2 id="cartTitle">Tu pedido</h2></div><button class="icon-button" id="closeCart" type="button" aria-label="Cerrar carrito">×</button></div>
     <div class="cart-items" id="cartItems"><div class="empty-cart"><span>❄</span><h3>Tu pedido está vacío</h3><p>Agrega productos del catálogo para comenzar.</p></div></div>
-    <div class="cart-summary" id="cartSummary" hidden><div><span>Subtotal referencial</span><strong id="cartTotal">$0</strong></div><p>Despacho: $3.500. Gratis en compras sobre $50.000.</p><button class="button primary full" id="checkoutButton" type="button">Solicitar pedido</button></div>
+    <div class="cart-summary" id="cartSummary" hidden><div><span>Subtotal de productos</span><strong id="cartTotal">$0</strong></div><div><span>Despacho estimado</span><strong id="cartShipping">$0</strong></div><div class="cart-grand-total"><span>Total estimado</span><strong id="cartGrandTotal">$0</strong></div><p id="cartShippingNote">Despacho gratis desde $50.000 en productos.</p><button class="button primary full" id="checkoutButton" type="button">Solicitar pedido</button></div>
   </aside>
 
   <dialog id="checkoutDialog" aria-labelledby="checkoutTitle">
